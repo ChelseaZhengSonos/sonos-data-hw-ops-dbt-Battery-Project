@@ -1,0 +1,89 @@
+---
+config:
+  send_anonymous_usage_stats: false
+
+profile_name: #TODO This should be the same name as the profile indicated in the dbt_project.yml.
+  target: "{{ env_var('DBT_PROFILE_TARGET', 'dev') }}" # The default target. It must be one of the targets you define in your profile.
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_ENV_SECRET_USER') }}"
+      role: "{{ env_var('DBT_ENV_SECRET_ROLE') }}"
+      warehouse: "{{ env_var('DBT_ENV_SECRET_WH') }}"
+      threads: 4
+      client_session_keep_alive: False
+
+      # Keypair config
+      private_key_path: "{{ env_var('DBT_ENV_SECRET_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_PASSPHRASE') }}"
+
+      database: DWM_DEV #TODO add the dev database where engineers will do development
+      schema: "{{ env_var('DBT_SCHEMA') }}"
+      
+    
+    pipeline-dev:
+      type: snowflake
+      account: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_ENV_SECRET_USER') }}"
+      role: "{{ env_var('DBT_ENV_SECRET_ROLE') }}"
+      warehouse: "{{ env_var('DBT_ENV_SECRET_WH') }}"
+      threads: 8
+      client_session_keep_alive: False
+  
+      # Keypair config
+      private_key_path: "{{ env_var('DBT_ENV_SECRET_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_PASSPHRASE') }}"
+
+      database: DWM_DEV #TODO add the database where the dev pipeline will run
+      schema: SCHEMA #TODO change this to the schema where the dbt project will run. You can also use "{{ env_var('DBT_SCHEMA') }}" to get the schema from the environment variables. Schemas can be overridden in the dbt_project.yml file and model configurations.
+      
+
+    github-test:
+      type: snowflake
+      account: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_ENV_SECRET_USER') }}"
+      role: "{{ env_var('DBT_ENV_SECRET_ROLE') }}"
+      warehouse: "{{ env_var('DBT_ENV_SECRET_WH') }}"
+      threads: 8
+      client_session_keep_alive: False
+
+      # password for github actions
+      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
+
+      database: DWM_TEST #TODO add the database where the github pipeline will run
+      schema: SCHEMA #TODO change this to the schema where the dbt project will run. You can also use "{{ env_var('DBT_SCHEMA') }}" to get the schema from the environment variables. Schemas can be overridden in the dbt_project.yml file and model configurations.
+      
+
+    pipeline-test:
+      type: snowflake
+      account: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_ENV_SECRET_USER') }}"
+      role: "{{ env_var('DBT_ENV_SECRET_ROLE') }}"
+      warehouse: "{{ env_var('DBT_ENV_SECRET_WH') }}"
+      threads: 8
+      client_session_keep_alive: False
+
+      # Keypair config
+      private_key_path: "{{ env_var('DBT_ENV_SECRET_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_PASSPHRASE') }}"
+
+      database: DWM_TEST #TODO add the database where the test pipeline will run
+      schema: SCHEMA #TODO change this to the schema where the dbt project will run. You can also use "{{ env_var('DBT_SCHEMA') }}" to get the schema from the environment variables. Schemas can be overridden in the dbt_project.yml file and model configurations.
+      
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('DBT_ENV_SECRET_USER') }}"
+      role: "{{ env_var('DBT_ENV_SECRET_ROLE') }}"
+      warehouse: "{{ env_var('DBT_ENV_SECRET_WH') }}"
+      threads: 8
+      client_session_keep_alive: False
+
+      # Keypair config
+      private_key_path: "{{ env_var('DBT_ENV_SECRET_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('DBT_ENV_SECRET_PASSPHRASE') }}"
+      
+      database: DWM #TODO add the database where the prod pipeline will run
+      schema: SCHEMA #TODO change this to the schema where the dbt project will run. You can also use "{{ env_var('DBT_SCHEMA') }}" to get the schema from the environment variables. Schemas can be overridden in the dbt_project.yml file and model configurations.

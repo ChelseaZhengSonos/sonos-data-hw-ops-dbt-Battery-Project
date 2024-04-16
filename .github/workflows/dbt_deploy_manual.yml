@@ -1,0 +1,45 @@
+name: DBT Deployment
+run-name: ${{ github.ref_name }} - DBT Deployment
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Which environment will run the dbt steps."
+        type: choice
+        options:
+        - dev
+        - test
+        - prod
+        required: true
+
+jobs:
+  DBT_DEPLOY:
+    runs-on: [self-hosted, dbt]
+    timeout-minutes: 720
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      
+      - name: Set up Python 3.11 #ADD PYTHON VERSION
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11  #(e.g. "3.11")
+
+      - name: if requirements.txt exists
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "./requirements.txt"
+
+      - name: Install Python requirements
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: pip install -r requirements.txt
+        
+      - name: 'Generate and upload dbt projects and documentation'
+        uses: Sonos-Inc/dpe-dbt-utils/actions/dbt_deploy@main
+        with:
+          environment: ${{ inputs.environment }}
+    
+

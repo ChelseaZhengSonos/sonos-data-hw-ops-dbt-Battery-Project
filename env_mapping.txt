@@ -1,0 +1,3 @@
+dev:pipeline-dev:test
+test:pipeline-test:test
+prod:prod:main

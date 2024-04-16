@@ -1,0 +1,21 @@
+# python
+.venv/
+venv/
+venv.bak/
+__pycache__
+config.py
+
+# env files/folders
+.env*
+.idea/
+**/.DS_Store
+**/Thumbs.db
+.vscode/
+
+# dbt
+logs/
+target/
+dbt_packages/
+
+# ignore files with .log extention
+.log

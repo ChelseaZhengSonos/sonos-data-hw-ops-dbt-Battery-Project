@@ -1,0 +1,11 @@
+# development
+venv/
+venv.bak/
+
+# dbt extras
+logs/
+
+# project extras
+LICENSE
+README.md
+requirements.txt

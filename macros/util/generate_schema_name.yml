@@ -1,0 +1,25 @@
+---
+version: 2
+
+macros:
+  - name: generate_schema_name
+    description: >
+      Overrides the generate_schema_name macro and use this macro to determine the name of
+      the schema that a model should be built in. 
+      
+      If running with profile target as "dev" the normal dbt schema conventions for `target.schema` and
+      `custom_schema_name` name are followed. E.g. `ODS_DEV.SCHEMA_CORE.MODEL_NAME`.
+
+      IF running with any other profile target then we create schemas named using `custom_schema_name` only.
+      E.g. `ODS_TEST.CORE.MODEL_NAME`.
+      
+      This macro accounts for if no custom schema name is given.
+    docs:
+      show: true
+    arguments:
+      - name: custom_schema_name
+        type: string
+        description: The configured value of schema in the specified node, or none if a value is not supplied.
+      - name: node
+        type: string
+        description: The node that is currently being processed by dbt.

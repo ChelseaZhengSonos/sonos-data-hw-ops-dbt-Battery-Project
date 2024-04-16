@@ -1,0 +1,14 @@
+# devops
+.github
+.vscode
+
+# python
+.venv/
+venv/
+venv.bak/
+
+# dbt
+dbt_packages/
+logs/
+macros/
+target/

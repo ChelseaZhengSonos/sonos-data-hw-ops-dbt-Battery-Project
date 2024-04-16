@@ -1,0 +1,8 @@
+team_name: "Data Platform" #TODO add your team name
+project_folder: ""
+use_vault_secrets: true
+use_aws_secrets_manager: true
+upload_project_to_s3: true
+upload_docs_to_s3: true
+send_slack_notification: false
+slack_channel_id: ""
